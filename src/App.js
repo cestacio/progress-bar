@@ -1,25 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ProgressBar from './components/ProgressBar';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      percentage: 0
+    };
+
+    this.updateProgress = this.updateProgress.bind(this);
+  }
+
+  updateProgress() {
+    if (this.state.percentage === 100) {
+      this.setState({ percentage: 0 });
+      return;
+    }
+    this.setState({ percentage: this.state.percentage + 10 });
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1 className="App-header">Let's track our progress!</h1>
+
+        <ProgressBar percentage={this.state.percentage} />
+
+        <h3>Currently: {this.state.percentage}%</h3>
+
+        <div>
+          <button onClick={this.updateProgress}>Update progress</button>
+        </div>
       </div>
     );
   }
